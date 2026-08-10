@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Coast State RP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ff6b6b, #f9ca24, #6c5ce7, #00d2d3, #ff9ff3, #54a0ff);
+            background-size: 400% 400%;
+            animation: tropicalShift 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        @keyframes tropicalShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header / Logo */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeInDown 1s ease;
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .logo-container img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 40px rgba(255, 107, 107, 0.6), 0 0 80px rgba(108, 92, 231, 0.4);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .server-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-top: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(90deg, #fff, #ffeaa7, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .server-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        /* Section styling */
+        .section {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffeaa7;
+        }
+
+        .section-title i {
+            font-size: 1.5rem;
+        }
+
+        /* Chain of Command Cards */
+        .chain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .chain-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chain-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .chain-card:hover::before {
+            opacity: 1;
+        }
+
+        .chain-card.founder { border-left-color: #e74c3c; }
+        .chain-card.cofounder { border-left-color: #e67e22; }
+        .chain-card.deputy { border-left-color: #f39c12; }
+        .chain-card.assistant { border-left-color: #f1c40f; }
+        .chain-card.coowner { border-left-color: #2ecc71; }
+        .chain-card.board { border-left-color: #9b59b6; }
+
+        .chain-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .chain-role {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .chain-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Links Section */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 18px 22px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(8px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .link-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .link-icon.blue { background: rgba(84, 160, 255, 0.3); }
+        .link-icon.green { background: rgba(46, 204, 113, 0.3); }
+        .link-icon.red { background: rgba(231, 76, 60, 0.3); }
+        .link-icon.purple { background: rgba(155, 89, 182, 0.3); }
+        .link-icon.orange { background: rgba(230, 126, 34, 0.3); }
+        .link-icon.discord { background: rgba(88, 101, 242, 0.3); }
+
+        .link-text {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .link-sub {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        /* Security Section */
+        .security-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .security-text {
+            line-height: 1.8;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .security-text h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .security-features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 14px 18px;
+            border-radius: 10px;
+        }
+
+        .security-item i {
+            color: #00d2d3;
+            font-size: 1.2rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .contact-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .contact-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .contact-role {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            color: #ffeaa7;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .contact-info a {
+            color: #74b9ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-info a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Discord CTA */
+        .discord-cta {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.3), rgba(88, 101, 242, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(88, 101, 242, 0.4);
+            margin-top: 20px;
+        }
+
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #5865F2;
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 25px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(88, 101, 242, 0.6);
+            background: #4752C4;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .server-title { font-size: 2.2rem; }
+            .section { padding: 25px; }
+            .security-content { grid-template-columns: 1fr; }
+            .chain-grid, .links-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="https://i.imgur.com/westcoastlogo.png" alt="West Coast State RP Logo">
+                <!-- Replace the src above with your actual logo URL when hosting -->
+            </div>
+            <h1 class="server-title">WEST COAST STATE RP</h1>
+            <p class="server-subtitle">Professional Roleplay Community | Est. 2025</p>
+        </header>
+
+        <!-- Chain of Command -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-sitemap"></i> Chain of Command</h2>
+            <div class="chain-grid">
+                
+                <div class="chain-card founder">
+                    <div class="rank-badge"><i class="fas fa-crown"></i></div>
+                    <div class="chain-name">James</div>
+                    <div class="chain-role">Founder</div>
+                    <div class="chain-desc">Has overall executive command of the server and final authority on all major decisions.</div>
+                </div>
+
+                <div class="chain-card cofounder">
+                    <div class="rank-badge"><i class="fas fa-user-tie"></i></div>
+                    <div class="chain-name">CJ</div>
+                    <div class="chain-role">Chief of Staff / Co-Founder</div>
+                    <div class="chain-desc">Handles staff relations and all sorts of staff-related matters. Second-in-command.</div>
+                </div>
+
+                <div class="chain-card deputy">
+                    <div class="rank-badge"><i class="fas fa-shield-alt"></i></div>
+                    <div class="chain-name">Raz</div>
+                    <div class="chain-role">Deputy Chief of Staff</div>
+                    <div class="chain-desc">Handles all staff relations and assists the Chief of Staff in daily operations.</div>
+                </div>
+
+                <div class="chain-card assistant">
+                    <div class="rank-badge"><i class="fas fa-hands-helping"></i></div>
+                    <div class="chain-name">Taz</div>
+                    <div class="chain-role">Asst. Chief of Staff</div>
+                    <div class="chain-desc">Assists Deputy Chief of Staff and holds overall executive power when delegated.</div>
+                </div>
+
+                <div class="chain-card coowner">
+                    <div class="rank-badge"><i class="fas fa-star"></i></div>
+                    <div class="chain-name">Hayden</div>
+                    <div class="chain-role">Co-Owner</div>
+                    <div class="chain-desc">Assists in executive decision making and strategic planning.</div>
+                </div>
+
+                <div class="chain-card coowner">
+                    <div class="rank-badge"><i class="fas fa-star"></i></div>
+                    <div class="chain-name">Tanner</div>
+                    <div class="chain-role">Co-Owner</div>
+                    <div class="chain-desc">Assists in executive decision making and community oversight.</div>
+                </div>
+
+                <div class="chain-card coowner">
+                    <div class="rank-badge"><i class="fas fa-star"></i></div>
+                    <div class="chain-name">Lungs</div>
+                    <div class="chain-role">Co-Owner</div>
+                    <div class="chain-desc">Assists in executive decision making and server operations.</div>
+                </div>
+
+                <div class="chain-card board">
+                    <div class="rank-badge"><i class="fas fa-code"></i></div>
+                    <div class="chain-name">A. Bates</div>
+                    <div class="chain-role">Board of Directors / Head Developer</div>
+                    <div class="chain-desc">Board of Directors and Head Developer for all development concerns and technical infrastructure.</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Quick Links -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-link"></i> Quick Links & Resources</h2>
+            <div class="links-grid">
+                
+                <a href="http://192.34.101.35:50260/" target="_blank" class="link-card">
+                    <div class="link-icon blue"><i class="fas fa-terminal"></i></div>
+                    <div>
+                        <div class="link-text">TX Admin Panel</div>
+                        <div class="link-sub">Server Management Interface</div>
+                    </div>
+                </a>
+
+                <a href="https://docs.google.com/document/d/1WaMoyH-gCI5sFA87JTAgGjxdbecBbELarEIiv2ZvTu8/edit?tab=t.0" target="_blank" class="link-card">
+                    <div class="link-icon purple"><i class="fas fa-sitemap"></i></div>
+                    <div>
+                        <div class="link-text">Chain of Command Document</div>
+                        <div class="link-sub">Official hierarchy documentation</div>
+                    </div>
+                </a>
+
+                <a href="https://docs.google.com/document/d/1yrAFC-PJwbgVLotIw0oAQPYasNWfb1ZNs6o1vZi_z4E/edit?tab=t.0#heading=h.vi1vldll0vzd" target="_blank" class="link-card">
+                    <div class="link-icon green"><i class="fas fa-gavel"></i></div>
+                    <div>
+                        <div class="link-text">Staff Rules & Regulations</div>
+                        <div class="link-sub">Guidelines for all staff members</div>
+                    </div>
+                </a>
+
+                <a href="https://docs.google.com/document/d/1qIRVP4uGtQfbel4a6PooVN1dA3Y3-kG8cUE9W4WFzr8/edit?tab=t.0" target="_blank" class="link-card">
+                    <div class="link-icon red"><i class="fas fa-ban"></i></div>
+                    <div>
+                        <div class="link-text">Unban / Ban Policy</div>
+                        <div class="link-sub">Ban enforcement guidelines</div>
+                    </div>
+                </a>
+
+                <a href="https://docs.google.com/document/d/1EJSFl8wWhaHIKrXvEF-z0BHG452vA-OzBdgAZjeBdZE/edit?tab=t.0#heading=h.tmpw50wv85na" target="_blank" class="link-card">
+                    <div class="link-icon orange"><i class="fas fa-clipboard-list"></i></div>
+                    <div>
+                        <div class="link-text">Ban Procedure</div>
+                        <div class="link-sub">Step-by-step ban process</div>
+                    </div>
+                </a>
+
+                <a href="https://forms.gle/1KT6gGU5J3ThJzkV8" target="_blank" class="link-card">
+                    <div class="link-icon green"><i class="fas fa-file-signature"></i></div>
+                    <div>
+                        <div class="link-text">Unban Appeal Form</div>
+                        <div class="link-sub">Submit your ban appeal here</div>
+                    </div>
+                </a>
+
+                <a href="https://discord.com/channels/1324574833274519632/1518927201850884267" target="_blank" class="link-card">
+                    <div class="link-icon discord"><i class="fab fa-discord"></i></div>
+                    <div>
+                        <div class="link-text">Staff Trainer Exam Channel</div>
+                        <div class="link-sub">Discord channel for examinations</div>
+                    </div>
+                </a>
+
+                <a href="https://discord.com/channels/1324574833274519632/1523505871353810974" target="_blank" class="link-card">
+                    <div class="link-icon discord"><i class="fab fa-discord"></i></div>
+                    <div>
+                        <div class="link-text">LOA Request Channel</div>
+                        <div class="link-sub">Leave of Absence requests</div>
+                    </div>
+                </a>
+
+                <a href="https://discord.com/channels/1324574833274519632/1505371757400555591" target="_blank" class="link-card">
+                    <div class="link-icon discord"><i class="fas fa-broadcast-tower"></i></div>
+                    <div>
+                        <div class="link-text">Patrol Notify Channel</div>
+                        <div class="link-sub">Patrol announcements & updates</div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- High End Security -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-lock"></i> High End Security</h2>
+            <div class="security-content">
+                <div class="security-text">
+                    <h3><i class="fas fa-shield-alt"></i> Server Protection</h3>
+                    <p>West Coast State RP employs industry-leading security measures to protect our community, staff, and player data. Our infrastructure is built with redundancy, encryption, and active monitoring to ensure a safe and fair roleplay environment for everyone.</p>
+                    <br>
+                    <p>All administrative actions are logged, staff permissions are tiered with least-privilege principles, and our ban system integrates directly with our backend to prevent circumvention.</p>
+                </div>
+                <div class="security-features">
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Encrypted Administrative Channels</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Real-Time Ban Synchronization</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Tiered Staff Permission System</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Comprehensive Audit Logging</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>DDoS Protected Infrastructure</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Automated Backup Systems</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-address-card"></i> Development Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-avatar">AB</div>
+                    <div class="contact-name">Ayden Bates</div>
+                    <div class="contact-role">Head Developer / Board of Directors</div>
+                    <div class="contact-info">
+                        <span><i class="fas fa-envelope"></i> <a href="mailto:Aydenleighbates12@gmail.com">Aydenleighbates12@gmail.com</a></span>
+                        <span><i class="fab fa-discord"></i> Yoboytrippin</span>
+                        <span><i class="fas fa-phone"></i> 678-365-6080</span>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8; font-style: italic;">
+                        Contact for any development issues, technical concerns, or infrastructure questions.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discord CTA -->
+        <section class="discord-cta">
+            <h2 style="font-size: 1.8rem; margin-bottom: 10px;"><i class="fab fa-discord"></i> Join Our Community</h2>
+            <p style="opacity: 0.9; margin-bottom: 10px;">Connect with players, staff, and stay updated on all server announcements.</p>
+            <a href="https://discord.gg/wUBsx36BC7" target="_blank" class="discord-btn">
+                <i class="fab fa-discord"></i> Join Discord Server
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p> West Coast State RP. All rights reserved.</p>
+            <p>Designed for the West Coast State RP community.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Generate floating particles
+        const particlesContainer = document.getElementById('particles');
+        const colors = ['rgba(255,255,255,0.3)', 'rgba(255,235,167,0.3)', 'rgba(129,236,236,0.3)', 'rgba(255,118,117,0.2)'];
+        
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.width = particle.style.height = (Math.random() * 8 + 4) + 'px';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particlesContainer.appendChild(particle);
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Logo fallback - replace with actual hosted image
+        document.querySelector('.logo-container img').addEventListener('error', function() {
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZjZiNmIiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZWNhNTciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+V0NTUlA8L3RleHQ+PC9zdmc+';
+        });
+    </script>
+
+</body>
+</html>
