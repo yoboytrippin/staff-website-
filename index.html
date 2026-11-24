@@ -3,39 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>West Coast State RP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>West Coast State RP — Florida's Premier FiveM Roleplay Community</title>
+    <meta name="description" content="West Coast State RP — a professional Florida-based FiveM roleplay community. Meet the staff, find resources, and join the community.">
+    <link rel="icon" type="image/png" href="westcoaststaterp.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            /* Florida sunset / ocean palette */
+            --navy-950: #060d18;
+            --navy-900: #081120;
+            --navy-800: #0c1b2e;
+            --navy-700: #122540;
+            --navy-600: #1a3355;
+            --sunset: #ff8c42;
+            --coral: #ff5964;
+            --teal: #2dd4bf;
+            --gold: #ffc145;
+            --cream: #f6ead9;
+            --text: #e9eff7;
+            --muted: rgba(233, 239, 247, 0.62);
+            --line: rgba(233, 239, 247, 0.10);
+            --grad-sunset: linear-gradient(135deg, #ff8c42 0%, #ff5964 100%);
+            --grad-ocean: linear-gradient(135deg, #2dd4bf 0%, #1d9bf0 100%);
+            --nav-h: 72px;
+            --radius: 18px;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
 
         body {
             font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(-45deg, #ff6b6b, #f9ca24, #6c5ce7, #00d2d3, #ff9ff3, #54a0ff);
-            background-size: 400% 400%;
-            animation: tropicalShift 15s ease infinite;
-            color: #fff;
+            background: var(--navy-950);
+            color: var(--text);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        @keyframes tropicalShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* ---------- Ambient background ---------- */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(900px 500px at 85% -5%, rgba(255, 140, 66, 0.14), transparent 60%),
+                radial-gradient(800px 500px at 10% 30%, rgba(255, 89, 100, 0.09), transparent 60%),
+                radial-gradient(900px 600px at 50% 110%, rgba(45, 212, 191, 0.10), transparent 60%);
+            animation: glowDrift 18s ease-in-out infinite alternate;
         }
 
-        /* Floating particles */
+        @keyframes glowDrift {
+            from { opacity: 0.85; transform: translateY(0); }
+            to   { opacity: 1;    transform: translateY(-14px); }
+        }
+
         .particles {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -43,118 +71,411 @@
 
         .particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.3);
+            bottom: -12px;
             border-radius: 50%;
             animation: floatUp linear infinite;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+            12%  { opacity: 0.8; }
+            88%  { opacity: 0.6; }
+            100% { transform: translateY(-108vh) scale(1.15); opacity: 0; }
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1180px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 22px;
         }
 
-        /* Header / Logo */
-        .header {
-            text-align: center;
-            padding: 40px 0;
-            animation: fadeInDown 1s ease;
+        /* ---------- Navigation ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            background: rgba(6, 13, 24, 0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid transparent;
+            transition: background 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
         }
 
-        .logo-container {
-            display: inline-block;
-            position: relative;
+        .navbar.scrolled {
+            background: rgba(6, 13, 24, 0.88);
+            border-bottom-color: var(--line);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
         }
 
-        .logo-container img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 40px rgba(255, 107, 107, 0.6), 0 0 80px rgba(108, 92, 231, 0.4);
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container img:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
-
-        .server-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-top: 20px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            background: linear-gradient(90deg, #fff, #ffeaa7, #fff);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-        }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-
-        .server-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-top: 10px;
-            font-weight: 300;
-        }
-
-        /* Section styling */
-        .section {
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 40px;
-            margin: 30px 0;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 25px;
+        .nav-inner {
+            max-width: 1180px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 22px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: #ffeaa7;
-        }
-
-        .section-title i {
-            font-size: 1.5rem;
-        }
-
-        /* Chain of Command Cards */
-        .chain-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            justify-content: space-between;
             gap: 20px;
         }
 
-        .chain-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-            border-radius: 16px;
-            padding: 25px;
-            border-left: 4px solid;
-            transition: all 0.3s ease;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+            flex-shrink: 0;
+        }
+
+        .nav-brand img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 140, 66, 0.55);
+            box-shadow: 0 0 18px rgba(255, 140, 66, 0.35);
+        }
+
+        .nav-brand span {
+            font-weight: 800;
+            font-size: 1.02rem;
+            letter-spacing: 0.4px;
+            background: linear-gradient(90deg, var(--cream), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+        }
+
+        .nav-links a {
             position: relative;
+            display: block;
+            padding: 9px 15px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: color 0.25s var(--ease), background 0.25s var(--ease);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            right: 15px;
+            bottom: 5px;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--grad-sunset);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--ease);
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active { color: var(--text); }
+        .nav-links a.active::after { transform: scaleX(1); }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--grad-sunset);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 6px 22px rgba(255, 100, 80, 0.35);
+            transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), filter 0.25s var(--ease);
+            flex-shrink: 0;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+            box-shadow: 0 10px 30px rgba(255, 100, 80, 0.5);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.25s var(--ease);
+        }
+
+        .nav-toggle:hover { background: rgba(255, 255, 255, 0.06); }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: calc(var(--nav-h) + 50px) 22px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-logo-wrap {
+            position: relative;
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .hero-logo-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -18px;
+            border-radius: 50%;
+            background: var(--grad-sunset);
+            filter: blur(48px);
+            opacity: 0.45;
+            z-index: -1;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 0.6; }
+        }
+
+        .hero-logo {
+            width: min(280px, 62vw);
+            height: min(280px, 62vw);
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(246, 234, 217, 0.85);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+            transition: transform 0.4s var(--ease);
+        }
+
+        .hero-logo:hover { transform: scale(1.04) rotate(1.5deg); }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 34px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: rgba(45, 212, 191, 0.10);
+            border: 1px solid rgba(45, 212, 191, 0.35);
+            color: var(--teal);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            animation: fadeInUp 0.9s var(--ease) 0.15s both;
+        }
+
+        .hero-title {
+            margin-top: 18px;
+            font-size: clamp(2.4rem, 7vw, 4.4rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: 1px;
+            background: linear-gradient(100deg, var(--cream) 20%, var(--gold) 45%, var(--sunset) 70%, var(--coral) 95%);
+            background-size: 220% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.9s var(--ease) 0.25s both, shine 6s linear infinite;
+        }
+
+        @keyframes shine { to { background-position: 220% center; } }
+
+        .hero-sub {
+            margin-top: 16px;
+            max-width: 620px;
+            color: var(--muted);
+            font-size: clamp(0.95rem, 2vw, 1.12rem);
+            font-weight: 300;
+            animation: fadeInUp 0.9s var(--ease) 0.35s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 34px;
+            animation: fadeInUp 0.9s var(--ease) 0.45s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 34px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.98rem;
+            text-decoration: none;
+            transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
+        }
+
+        .btn-primary {
+            background: var(--grad-sunset);
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(255, 100, 80, 0.4);
+        }
+
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(255, 100, 80, 0.55); }
+
+        .btn-ghost {
+            color: var(--text);
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-ghost:hover { transform: translateY(-3px); border-color: rgba(45, 212, 191, 0.5); background: rgba(45, 212, 191, 0.08); }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--muted);
+            font-size: 1.3rem;
+            animation: bounceHint 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceHint {
+            0%, 100% { transform: translate(-50%, 0); opacity: 0.6; }
+            50% { transform: translate(-50%, 9px); opacity: 1; }
+        }
+
+        /* ---------- Sections ---------- */
+        .section { padding: 90px 0 20px; }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title .accent {
+            background: var(--grad-sunset);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            max-width: 640px;
+            margin: 14px auto 0;
+            font-weight: 300;
+        }
+
+        .panel {
+            background: rgba(12, 27, 46, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: clamp(26px, 4vw, 46px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+        }
+
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- Chain of Command ---------- */
+        .command-group { margin-bottom: 44px; }
+        .command-group:last-child { margin-bottom: 0; }
+
+        .group-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            color: var(--cream);
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .group-label::before,
+        .group-label::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, var(--line), transparent);
+        }
+
+        .group-label i { color: var(--sunset); }
+
+        .chain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+            gap: 18px;
+        }
+
+        .chain-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 24px 22px 20px;
             overflow: hidden;
+            transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
         }
 
         .chain-card::before {
@@ -162,570 +483,800 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            right: 0;
+            height: 3px;
+            background: var(--tier-grad, var(--grad-sunset));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s var(--ease);
         }
 
         .chain-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
         }
 
-        .chain-card:hover::before {
-            opacity: 1;
+        .chain-card:hover::before { transform: scaleX(1); }
+
+        .tier-founder    { --tier-grad: linear-gradient(90deg, #ffc145, #ff8c42); }
+        .tier-exec       { --tier-grad: linear-gradient(90deg, #ff8c42, #ff5964); }
+        .tier-owner      { --tier-grad: linear-gradient(90deg, #ff5964, #c86dd7); }
+        .tier-dev        { --tier-grad: linear-gradient(90deg, #2dd4bf, #1d9bf0); }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
         }
 
-        .chain-card.founder { border-left-color: #e74c3c; }
-        .chain-card.cofounder { border-left-color: #e67e22; }
-        .chain-card.deputy { border-left-color: #f39c12; }
-        .chain-card.assistant { border-left-color: #f1c40f; }
-        .chain-card.coowner { border-left-color: #2ecc71; }
-        .chain-card.board { border-left-color: #9b59b6; }
+        .callsign {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--navy-950);
+            background: var(--tier-grad, var(--grad-sunset));
+            padding: 4px 11px;
+            border-radius: 50px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: rgba(45, 212, 191, 0.10);
+            border: 1px solid rgba(45, 212, 191, 0.30);
+            padding: 4px 11px;
+            border-radius: 50px;
+        }
+
+        .status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 8px var(--teal);
+        }
 
         .chain-name {
-            font-size: 1.3rem;
+            font-size: 1.28rem;
             font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .chain-role {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .chain-desc {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        .rank-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            background: rgba(255,255,255,0.2);
+            gap: 9px;
         }
 
-        /* Links Section */
+        .chain-name i { font-size: 0.85rem; color: var(--gold); }
+
+        .chain-role {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 4px 0 12px;
+            color: var(--muted);
+        }
+
+        .chain-meta {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .chain-meta i { color: var(--sunset); font-size: 0.72rem; }
+
+        /* Open positions */
+        .open-strip {
+            margin-top: 26px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .open-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--muted);
+            border: 1px dashed rgba(233, 239, 247, 0.25);
+            border-radius: 50px;
+            padding: 7px 15px;
+            transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+        }
+
+        .open-chip:hover { border-color: var(--teal); color: var(--teal); }
+        .open-chip i { font-size: 0.68rem; }
+
+        /* ---------- Resources ---------- */
         .links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
         }
 
         .link-card {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 18px 22px;
-            border-radius: 14px;
+            gap: 16px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--line);
             text-decoration: none;
-            color: #fff;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            transition: transform 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
         }
 
         .link-card:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(8px);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transform: translateX(7px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 140, 66, 0.45);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
         }
 
         .link-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             flex-shrink: 0;
+            transition: transform 0.3s var(--ease);
         }
 
-        .link-icon.blue { background: rgba(84, 160, 255, 0.3); }
-        .link-icon.green { background: rgba(46, 204, 113, 0.3); }
-        .link-icon.red { background: rgba(231, 76, 60, 0.3); }
-        .link-icon.purple { background: rgba(155, 89, 182, 0.3); }
-        .link-icon.orange { background: rgba(230, 126, 34, 0.3); }
-        .link-icon.discord { background: rgba(88, 101, 242, 0.3); }
+        .link-card:hover .link-icon { transform: scale(1.1) rotate(-4deg); }
 
-        .link-text {
-            font-weight: 600;
-            font-size: 0.95rem;
+        .link-icon.blue   { background: rgba(29, 155, 240, 0.16); color: #58b6f5; }
+        .link-icon.green  { background: rgba(46, 204, 113, 0.14); color: #55d98c; }
+        .link-icon.red    { background: rgba(255, 89, 100, 0.14); color: #ff7b85; }
+        .link-icon.purple { background: rgba(200, 109, 215, 0.14); color: #d795e3; }
+        .link-icon.orange { background: rgba(255, 140, 66, 0.15); color: #ffab74; }
+        .link-icon.discord{ background: rgba(88, 101, 242, 0.16); color: #8b9bff; }
+        .link-icon.teal   { background: rgba(45, 212, 191, 0.14); color: #5ce4d1; }
+
+        .link-text { font-weight: 600; font-size: 0.94rem; }
+        .link-sub { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+
+        .link-arrow {
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 0.8rem;
+            transition: transform 0.3s var(--ease), color 0.3s var(--ease);
         }
 
-        .link-sub {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            margin-top: 2px;
-        }
+        .link-card:hover .link-arrow { transform: translateX(4px); color: var(--sunset); }
 
-        /* Security Section */
+        /* ---------- Security ---------- */
         .security-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 44px;
             align-items: center;
         }
 
-        .security-text {
-            line-height: 1.8;
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
         .security-text h3 {
-            color: #ff6b6b;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .security-features {
+            font-size: 1.35rem;
+            margin-bottom: 16px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             gap: 12px;
         }
+
+        .security-text h3 i {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 89, 100, 0.14);
+            color: var(--coral);
+            font-size: 1.05rem;
+        }
+
+        .security-text p { color: var(--muted); font-weight: 300; margin-bottom: 14px; }
+
+        .security-features { display: flex; flex-direction: column; gap: 12px; }
 
         .security-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 14px 18px;
-            border-radius: 10px;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--line);
+            padding: 15px 18px;
+            border-radius: 13px;
+            font-size: 0.92rem;
+            transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
         }
 
-        .security-item i {
-            color: #00d2d3;
-            font-size: 1.2rem;
+        .security-item:hover {
+            transform: translateX(7px);
+            border-color: rgba(45, 212, 191, 0.4);
+            background: rgba(45, 212, 191, 0.05);
         }
 
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+        .security-item i { color: var(--teal); font-size: 1.05rem; }
 
+        /* ---------- Contact ---------- */
         .contact-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 16px;
+            max-width: 520px;
+            margin: 0 auto;
             text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 40px 30px;
+            transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
         }
 
         .contact-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-6px);
+            border-color: rgba(255, 140, 66, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
         }
 
         .contact-avatar {
-            width: 70px;
-            height: 70px;
+            width: 82px;
+            height: 82px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            background: var(--grad-ocean);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
+            margin: 0 auto 18px;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #062a26;
+            box-shadow: 0 10px 30px rgba(45, 212, 191, 0.3);
         }
 
-        .contact-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
+        .contact-name { font-size: 1.4rem; font-weight: 700; }
+        .contact-role { font-size: 0.82rem; color: var(--gold); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin: 5px 0 22px; }
 
-        .contact-role {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-bottom: 15px;
-            color: #ffeaa7;
-        }
+        .contact-info { display: flex; flex-direction: column; gap: 12px; font-size: 0.92rem; }
 
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-
-        .contact-info a {
-            color: #74b9ff;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .contact-info a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        /* Discord CTA */
-        .discord-cta {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.3), rgba(88, 101, 242, 0.1));
-            border-radius: 20px;
-            border: 2px solid rgba(88, 101, 242, 0.4);
-            margin-top: 20px;
-        }
-
-        .discord-btn {
+        .contact-info a, .contact-info span.line {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.25s var(--ease);
+        }
+
+        .contact-info a:hover { color: var(--teal); }
+        .contact-info i { color: var(--sunset); width: 18px; }
+
+        .contact-note {
+            margin-top: 22px;
+            font-size: 0.83rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* ---------- Discord CTA ---------- */
+        .discord-cta {
+            margin-top: 80px;
+            text-align: center;
+            padding: clamp(40px, 6vw, 64px);
+            border-radius: 26px;
+            background:
+                radial-gradient(600px 260px at 50% -20%, rgba(88, 101, 242, 0.28), transparent 70%),
+                rgba(12, 27, 46, 0.55);
+            border: 1px solid rgba(88, 101, 242, 0.35);
+            backdrop-filter: blur(14px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discord-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: ctaSheen 5s ease-in-out infinite;
+        }
+
+        @keyframes ctaSheen {
+            0%, 60% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .discord-cta h2 { font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 800; }
+        .discord-cta h2 i { color: #8b9bff; margin-right: 10px; }
+        .discord-cta p { color: var(--muted); margin: 12px auto 8px; max-width: 480px; font-weight: 300; }
+
+        .discord-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
             background: #5865F2;
             color: #fff;
             text-decoration: none;
-            padding: 16px 40px;
+            padding: 16px 42px;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.08rem;
             font-weight: 700;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 25px rgba(88, 101, 242, 0.4);
+            margin-top: 20px;
+            transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+            box-shadow: 0 10px 32px rgba(88, 101, 242, 0.4);
         }
 
         .discord-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 35px rgba(88, 101, 242, 0.6);
             background: #4752C4;
+            box-shadow: 0 16px 44px rgba(88, 101, 242, 0.6);
         }
 
-        /* Footer */
+        /* ---------- Footer ---------- */
         .footer {
             text-align: center;
-            padding: 30px;
-            opacity: 0.7;
-            font-size: 0.85rem;
+            padding: 60px 22px 34px;
+            color: var(--muted);
+            font-size: 0.83rem;
         }
 
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .footer .foot-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 140, 66, 0.4);
+            margin-bottom: 14px;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin: 16px 0 20px;
         }
 
-        /* Responsive */
+        .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.25s var(--ease); }
+        .footer-links a:hover { color: var(--sunset); }
+
+        /* ---------- Back to top ---------- */
+        .to-top {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(12, 27, 46, 0.85);
+            backdrop-filter: blur(10px);
+            color: var(--sunset);
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 90;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(14px);
+            transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), border-color 0.25s var(--ease);
+        }
+
+        .to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .to-top:hover { border-color: var(--sunset); }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .security-content { grid-template-columns: 1fr; gap: 30px; }
+        }
+
         @media (max-width: 768px) {
-            .server-title { font-size: 2.2rem; }
-            .section { padding: 25px; }
-            .security-content { grid-template-columns: 1fr; }
-            .chain-grid, .links-grid { grid-template-columns: 1fr; }
+            .nav-toggle { display: block; }
+
+            .nav-menu {
+                position: fixed;
+                top: var(--nav-h);
+                left: 0;
+                right: 0;
+                background: rgba(6, 13, 24, 0.97);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--line);
+                padding: 14px 22px 22px;
+                transform: translateY(-12px);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+            }
+
+            .nav-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+            .nav-links { flex-direction: column; align-items: stretch; gap: 4px; }
+            .nav-links a { padding: 13px 16px; }
+            .nav-links a::after { display: none; }
+            .nav-cta { display: none; }
+            .section { padding: 66px 0 10px; }
         }
 
-        /* Scrollbar */
+        /* ---------- Scrollbar ---------- */
         ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+        ::-webkit-scrollbar-track { background: var(--navy-950); }
+        ::-webkit-scrollbar-thumb { background: var(--navy-600); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: #24467a; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.15s !important; }
+            html { scroll-behavior: auto; }
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
 
-    <!-- Floating Particles -->
+    <div class="bg-glow"></div>
     <div class="particles" id="particles"></div>
 
-    <div class="container">
-        
-        <!-- Header -->
-        <header class="header">
-            <div class="logo-container">
-                <img src="westcoaststaterp.png" alt="West Coast State RP Logo">
-                <!-- Replace the src above with your actual logo URL when hosting -->
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="nav-brand">
+                <img src="westcoaststaterp.png" alt="WCS RP Logo">
+                <span>WEST COAST STATE RP</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#command">Command</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
             </div>
-            <h1 class="server-title">WEST COAST STATE RP</h1>
-            <p class="server-subtitle">Professional Roleplay Community | Est. 2025</p>
-        </header>
+            <a href="https://discord.gg/wUBsx36BC7" target="_blank" class="nav-cta"><i class="fab fa-discord"></i> Join Discord</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero" id="home">
+        <div class="hero-logo-wrap">
+            <img src="westcoaststaterp.png" alt="West Coast State RP Logo" class="hero-logo">
+        </div>
+        <span class="hero-badge"><i class="fas fa-sun"></i> Florida-Based FiveM Roleplay &nbsp;•&nbsp; Est. 2025</span>
+        <h1 class="hero-title">WEST COAST STATE RP</h1>
+        <p class="hero-sub">A professional FiveM roleplay community set in the Sunshine State. Serious staff, serious roleplay, zero tolerance for chaos — built by players, for players.</p>
+        <div class="hero-actions">
+            <a href="https://discord.gg/wUBsx36BC7" target="_blank" class="btn btn-primary"><i class="fab fa-discord"></i> Join the Community</a>
+            <a href="#command" class="btn btn-ghost"><i class="fas fa-sitemap"></i> Meet the Staff</a>
+        </div>
+        <a href="#command" class="scroll-hint" aria-label="Scroll down"><i class="fas fa-chevron-down"></i></a>
+    </header>
+
+    <div class="container">
 
         <!-- Chain of Command -->
-        <section class="section">
-            <h2 class="section-title"><i class="fas fa-sitemap"></i> Chain of Command</h2>
-            <div class="chain-grid">
-                
-                <div class="chain-card founder">
-                    <div class="rank-badge"><i class="fas fa-crown"></i></div>
-                    <div class="chain-name">James</div>
-                    <div class="chain-role">Founder</div>
-                    <div class="chain-desc">Has overall executive command of the server and final authority on all major decisions.</div>
+        <section class="section" id="command">
+            <div class="section-head reveal">
+                <span class="section-eyebrow"><i class="fas fa-sitemap"></i> Leadership</span>
+                <h2 class="section-title">Chain of <span class="accent">Command</span></h2>
+                <p class="section-sub">Our current staff roster, straight from the official staff management board. Every member listed below is active and verified.</p>
+            </div>
+
+            <div class="panel reveal">
+                <!-- Staff Management -->
+                <div class="command-group">
+                    <div class="group-label"><i class="fas fa-users-gear"></i> Staff Management</div>
+                    <div class="chain-grid">
+                        <div class="chain-card tier-founder">
+                            <div class="card-top"><span class="callsign">S-01</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-crown"></i> James</div>
+                            <div class="chain-role">Founder</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 25/05/2026</div>
+                        </div>
+                        <div class="chain-card tier-exec">
+                            <div class="card-top"><span class="callsign">S-02</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-user-tie"></i> CJ</div>
+                            <div class="chain-role">Asst. Founder</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 08/11/2026</div>
+                        </div>
+                        <div class="chain-card tier-exec">
+                            <div class="card-top"><span class="callsign">S-03</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-shield-halved"></i> Raz</div>
+                            <div class="chain-role">Chief of Staff</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 21/11/2026</div>
+                        </div>
+                        <div class="chain-card tier-exec">
+                            <div class="card-top"><span class="callsign">S-04</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-hands-helping"></i> Price</div>
+                            <div class="chain-role">Asst. Chief of Staff</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 21/11/2026</div>
+                        </div>
+                        <div class="chain-card tier-exec">
+                            <div class="card-top"><span class="callsign">S-05</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-user-shield"></i> Taz</div>
+                            <div class="chain-role">Deputy Chief of Staff</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 15/07/2026</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="chain-card cofounder">
-                    <div class="rank-badge"><i class="fas fa-user-tie"></i></div>
-                    <div class="chain-name">CJ</div>
-                    <div class="chain-role">Chief of Staff / Co-Founder</div>
-                    <div class="chain-desc">Handles staff relations and all sorts of staff-related matters. Second-in-command.</div>
+                <!-- Ownership -->
+                <div class="command-group">
+                    <div class="group-label"><i class="fas fa-star"></i> Ownership</div>
+                    <div class="chain-grid">
+                        <div class="chain-card tier-owner">
+                            <div class="card-top"><span class="callsign">S-07</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-star"></i> Tanner</div>
+                            <div class="chain-role">Owner</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 18/09/2026</div>
+                        </div>
+                        <div class="chain-card tier-owner">
+                            <div class="card-top"><span class="callsign">S-14</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-star-half-stroke"></i> Lungs</div>
+                            <div class="chain-role">Co-Owner</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 27/06/2026</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="chain-card deputy">
-                    <div class="rank-badge"><i class="fas fa-shield-alt"></i></div>
-                    <div class="chain-name">Raz</div>
-                    <div class="chain-role">Deputy Chief of Staff</div>
-                    <div class="chain-desc">Handles all staff relations and assists the Chief of Staff in daily operations.</div>
+                <!-- Development Team -->
+                <div class="command-group">
+                    <div class="group-label"><i class="fas fa-code"></i> Development Team</div>
+                    <div class="chain-grid">
+                        <div class="chain-card tier-dev">
+                            <div class="card-top"><span class="callsign">S-20</span><span class="status">Active</span></div>
+                            <div class="chain-name"><i class="fas fa-terminal"></i> Bates</div>
+                            <div class="chain-role">Developer</div>
+                            <div class="chain-meta"><i class="fas fa-calendar-check"></i> Appointed 11/10/2026</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="chain-card assistant">
-                    <div class="rank-badge"><i class="fas fa-hands-helping"></i></div>
-                    <div class="chain-name">Taz</div>
-                    <div class="chain-role">Asst. Chief of Staff</div>
-                    <div class="chain-desc">Assists Deputy Chief of Staff and holds overall executive power when delegated.</div>
+                <!-- Open positions -->
+                <div class="open-strip reveal">
+                    <span class="open-chip"><i class="fas fa-circle-plus"></i> S-08 · S-09 · S-10 — Owner slots open</span>
+                    <span class="open-chip"><i class="fas fa-circle-plus"></i> S-12 · S-13 · S-15 — Co-Owner slots open</span>
+                    <span class="open-chip"><i class="fas fa-circle-plus"></i> S-16 · S-17 · S-18 — Board of Directors open</span>
                 </div>
-
-                <div class="chain-card coowner">
-                    <div class="rank-badge"><i class="fas fa-star"></i></div>
-                    <div class="chain-name">Hayden</div>
-                    <div class="chain-role">Co-Owner</div>
-                    <div class="chain-desc">Assists in executive decision making and strategic planning.</div>
-                </div>
-
-                <div class="chain-card coowner">
-                    <div class="rank-badge"><i class="fas fa-star"></i></div>
-                    <div class="chain-name">Tanner</div>
-                    <div class="chain-role">Co-Owner</div>
-                    <div class="chain-desc">Assists in executive decision making and community oversight.</div>
-                </div>
-
-                <div class="chain-card coowner">
-                    <div class="rank-badge"><i class="fas fa-star"></i></div>
-                    <div class="chain-name">Lungs</div>
-                    <div class="chain-role">Co-Owner</div>
-                    <div class="chain-desc">Assists in executive decision making and server operations.</div>
-                </div>
-
-                <div class="chain-card board">
-                    <div class="rank-badge"><i class="fas fa-code"></i></div>
-                    <div class="chain-name">A. Bates</div>
-                    <div class="chain-role">Board of Directors / Head Developer</div>
-                    <div class="chain-desc">Board of Directors and Head Developer for all development concerns and technical infrastructure.</div>
-                </div>
-
             </div>
         </section>
 
-        <!-- Quick Links -->
-        <section class="section">
-            <h2 class="section-title"><i class="fas fa-link"></i> Quick Links & Resources</h2>
-            <div class="links-grid">
-                
-                <a href="http://192.34.101.35:50260/" target="_blank" class="link-card">
-                    <div class="link-icon blue"><i class="fas fa-terminal"></i></div>
-                    <div>
-                        <div class="link-text">TX Admin Panel</div>
-                        <div class="link-sub">Server Management Interface</div>
-                    </div>
-                </a>
+        <!-- Resources -->
+        <section class="section" id="resources">
+            <div class="section-head reveal">
+                <span class="section-eyebrow"><i class="fas fa-link"></i> Resources</span>
+                <h2 class="section-title">Quick Links &amp; <span class="accent">Resources</span></h2>
+                <p class="section-sub">Everything staff and players need — server management, documentation, and appeals — in one place.</p>
+            </div>
 
-                <a href="https://docs.google.com/document/d/1WaMoyH-gCI5sFA87JTAgGjxdbecBbELarEIiv2ZvTu8/edit?tab=t.0" target="_blank" class="link-card">
-                    <div class="link-icon purple"><i class="fas fa-sitemap"></i></div>
-                    <div>
-                        <div class="link-text">Chain of Command Document</div>
-                        <div class="link-sub">Official hierarchy documentation</div>
-                    </div>
-                </a>
-
-                <a href="https://docs.google.com/document/d/1yrAFC-PJwbgVLotIw0oAQPYasNWfb1ZNs6o1vZi_z4E/edit?tab=t.0#heading=h.vi1vldll0vzd" target="_blank" class="link-card">
-                    <div class="link-icon green"><i class="fas fa-gavel"></i></div>
-                    <div>
-                        <div class="link-text">Staff Rules & Regulations</div>
-                        <div class="link-sub">Guidelines for all staff members</div>
-                    </div>
-                </a>
-
-                <a href="https://docs.google.com/document/d/1qIRVP4uGtQfbel4a6PooVN1dA3Y3-kG8cUE9W4WFzr8/edit?tab=t.0" target="_blank" class="link-card">
-                    <div class="link-icon red"><i class="fas fa-ban"></i></div>
-                    <div>
-                        <div class="link-text">Unban / Ban Policy</div>
-                        <div class="link-sub">Ban enforcement guidelines</div>
-                    </div>
-                </a>
-
-                <a href="https://docs.google.com/document/d/1EJSFl8wWhaHIKrXvEF-z0BHG452vA-OzBdgAZjeBdZE/edit?tab=t.0#heading=h.tmpw50wv85na" target="_blank" class="link-card">
-                    <div class="link-icon orange"><i class="fas fa-clipboard-list"></i></div>
-                    <div>
-                        <div class="link-text">Ban Procedure</div>
-                        <div class="link-sub">Step-by-step ban process</div>
-                    </div>
-                </a>
-
-                <a href="https://forms.gle/1KT6gGU5J3ThJzkV8" target="_blank" class="link-card">
-                    <div class="link-icon green"><i class="fas fa-file-signature"></i></div>
-                    <div>
-                        <div class="link-text">Unban Appeal Form</div>
-                        <div class="link-sub">Submit your ban appeal here</div>
-                    </div>
-                </a>
-
-                <a href="https://discord.com/channels/1324574833274519632/1518927201850884267" target="_blank" class="link-card">
-                    <div class="link-icon discord"><i class="fab fa-discord"></i></div>
-                    <div>
-                        <div class="link-text">Staff Trainer Exam Channel</div>
-                        <div class="link-sub">Discord channel for examinations</div>
-                    </div>
-                </a>
-
-                <a href="https://discord.com/channels/1324574833274519632/1523505871353810974" target="_blank" class="link-card">
-                    <div class="link-icon discord"><i class="fab fa-discord"></i></div>
-                    <div>
-                        <div class="link-text">LOA Request Channel</div>
-                        <div class="link-sub">Leave of Absence requests</div>
-                    </div>
-                </a>
-
-                <a href="https://discord.com/channels/1324574833274519632/1505371757400555591" target="_blank" class="link-card">
-                    <div class="link-icon discord"><i class="fas fa-broadcast-tower"></i></div>
-                    <div>
-                        <div class="link-text">Patrol Notify Channel</div>
-                        <div class="link-sub">Patrol announcements & updates</div>
-                    </div>
-                </a>
-
+            <div class="panel reveal">
+                <div class="links-grid">
+                    <a href="http://192.34.101.35:50260/" target="_blank" class="link-card">
+                        <div class="link-icon blue"><i class="fas fa-terminal"></i></div>
+                        <div><div class="link-text">TX Admin Panel</div><div class="link-sub">Server management interface</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://docs.google.com/document/d/1WaMoyH-gCI5sFA87JTAgGjxdbecBbELarEIiv2ZvTu8/edit?tab=t.0" target="_blank" class="link-card">
+                        <div class="link-icon purple"><i class="fas fa-sitemap"></i></div>
+                        <div><div class="link-text">Chain of Command Document</div><div class="link-sub">Official hierarchy documentation</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://docs.google.com/document/d/1yrAFC-PJwbgVLotIw0oAQPYasNWfb1ZNs6o1vZi_z4E/edit?tab=t.0#heading=h.vi1vldll0vzd" target="_blank" class="link-card">
+                        <div class="link-icon green"><i class="fas fa-gavel"></i></div>
+                        <div><div class="link-text">Staff Rules &amp; Regulations</div><div class="link-sub">Guidelines for all staff members</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://docs.google.com/document/d/1qIRVP4uGtQfbel4a6PooVN1dA3Y3-kG8cUE9W4WFzr8/edit?tab=t.0" target="_blank" class="link-card">
+                        <div class="link-icon red"><i class="fas fa-ban"></i></div>
+                        <div><div class="link-text">Unban / Ban Policy</div><div class="link-sub">Ban enforcement guidelines</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://docs.google.com/document/d/1EJSFl8wWhaHIKrXvEF-z0BHG452vA-OzBdgAZjeBdZE/edit?tab=t.0#heading=h.tmpw50wv85na" target="_blank" class="link-card">
+                        <div class="link-icon orange"><i class="fas fa-clipboard-list"></i></div>
+                        <div><div class="link-text">Ban Procedure</div><div class="link-sub">Step-by-step ban process</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://forms.gle/1KT6gGU5J3ThJzkV8" target="_blank" class="link-card">
+                        <div class="link-icon teal"><i class="fas fa-file-signature"></i></div>
+                        <div><div class="link-text">Unban Appeal Form</div><div class="link-sub">Submit your ban appeal here</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://discord.com/channels/1324574833274519632/1518927201850884267" target="_blank" class="link-card">
+                        <div class="link-icon discord"><i class="fab fa-discord"></i></div>
+                        <div><div class="link-text">Staff Trainer Exam Channel</div><div class="link-sub">Discord channel for examinations</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://discord.com/channels/1324574833274519632/1523505871353810974" target="_blank" class="link-card">
+                        <div class="link-icon discord"><i class="fas fa-person-walking-arrow-right"></i></div>
+                        <div><div class="link-text">LOA Request Channel</div><div class="link-sub">Leave of Absence requests</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                    <a href="https://discord.com/channels/1324574833274519632/1505371757400555591" target="_blank" class="link-card">
+                        <div class="link-icon blue"><i class="fas fa-broadcast-tower"></i></div>
+                        <div><div class="link-text">Patrol Notify Channel</div><div class="link-sub">Patrol announcements &amp; updates</div></div>
+                        <i class="fas fa-arrow-right link-arrow"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- High End Security -->
-        <section class="section">
-            <h2 class="section-title"><i class="fas fa-lock"></i> High End Security</h2>
-            <div class="security-content">
-                <div class="security-text">
-                    <h3><i class="fas fa-shield-alt"></i> Server Protection</h3>
-                    <p>West Coast State RP employs industry-leading security measures to protect our community, staff, and player data. Our infrastructure is built with redundancy, encryption, and active monitoring to ensure a safe and fair roleplay environment for everyone.</p>
-                    <br>
-                    <p>All administrative actions are logged, staff permissions are tiered with least-privilege principles, and our ban system integrates directly with our backend to prevent circumvention.</p>
-                </div>
-                <div class="security-features">
-                    <div class="security-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Encrypted Administrative Channels</span>
+        <!-- Security -->
+        <section class="section" id="security">
+            <div class="section-head reveal">
+                <span class="section-eyebrow"><i class="fas fa-lock"></i> Protection</span>
+                <h2 class="section-title">High-End <span class="accent">Security</span></h2>
+                <p class="section-sub">Industry-leading measures protecting our community, staff, and player data around the clock.</p>
+            </div>
+
+            <div class="panel reveal">
+                <div class="security-content">
+                    <div class="security-text">
+                        <h3><i class="fas fa-shield-halved"></i> Server Protection</h3>
+                        <p>West Coast State RP runs on hardened, redundant infrastructure with encryption and active monitoring — so the only thing players need to worry about is the roleplay.</p>
+                        <p>All administrative actions are logged, staff permissions follow least-privilege principles, and our ban system integrates directly with the backend to prevent circumvention.</p>
                     </div>
-                    <div class="security-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Real-Time Ban Synchronization</span>
-                    </div>
-                    <div class="security-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Tiered Staff Permission System</span>
-                    </div>
-                    <div class="security-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Comprehensive Audit Logging</span>
-                    </div>
-                    <div class="security-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>DDoS Protected Infrastructure</span>
-                    </div>
-                    <div class="security-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Automated Backup Systems</span>
+                    <div class="security-features">
+                        <div class="security-item"><i class="fas fa-check-circle"></i><span>Encrypted administrative channels</span></div>
+                        <div class="security-item"><i class="fas fa-check-circle"></i><span>Real-time ban synchronization</span></div>
+                        <div class="security-item"><i class="fas fa-check-circle"></i><span>Tiered staff permission system</span></div>
+                        <div class="security-item"><i class="fas fa-check-circle"></i><span>Comprehensive audit logging</span></div>
+                        <div class="security-item"><i class="fas fa-check-circle"></i><span>DDoS-protected infrastructure</span></div>
+                        <div class="security-item"><i class="fas fa-check-circle"></i><span>Automated backup systems</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact -->
-        <section class="section">
-            <h2 class="section-title"><i class="fas fa-address-card"></i> Development Contact</h2>
-            <div class="contact-grid">
+        <section class="section" id="contact">
+            <div class="section-head reveal">
+                <span class="section-eyebrow"><i class="fas fa-address-card"></i> Support</span>
+                <h2 class="section-title">Development <span class="accent">Contact</span></h2>
+                <p class="section-sub">Technical issues, infrastructure questions, or development concerns — reach out directly.</p>
+            </div>
+
+            <div class="reveal">
                 <div class="contact-card">
                     <div class="contact-avatar">AB</div>
                     <div class="contact-name">Ayden Bates</div>
-                    <div class="contact-role">Head Developer / Board of Directors</div>
+                    <div class="contact-role">Developer · S-20</div>
                     <div class="contact-info">
-                        <span><i class="fas fa-envelope"></i> <a href="mailto:Aydenleighbates12@gmail.com">Aydenleighbates12@gmail.com</a></span>
-                        <span><i class="fab fa-discord"></i> Yoboytrippin</span>
-                        <span><i class="fas fa-phone"></i> 678-365-6080</span>
+                        <a href="mailto:Aydenleighbates12@gmail.com"><i class="fas fa-envelope"></i> Aydenleighbates12@gmail.com</a>
+                        <span class="line"><i class="fab fa-discord"></i> Yoboytrippin</span>
+                        <span class="line"><i class="fas fa-phone"></i> 678-365-6080</span>
                     </div>
-                    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8; font-style: italic;">
-                        Contact for any development issues, technical concerns, or infrastructure questions.
-                    </p>
+                    <p class="contact-note">Contact for any development issues, technical concerns, or infrastructure questions.</p>
                 </div>
             </div>
-        </section>
 
-        <!-- Discord CTA -->
-        <section class="discord-cta">
-            <h2 style="font-size: 1.8rem; margin-bottom: 10px;"><i class="fab fa-discord"></i> Join Our Community</h2>
-            <p style="opacity: 0.9; margin-bottom: 10px;">Connect with players, staff, and stay updated on all server announcements.</p>
-            <a href="https://discord.gg/wUBsx36BC7" target="_blank" class="discord-btn">
-                <i class="fab fa-discord"></i> Join Discord Server
-            </a>
+            <!-- Discord CTA -->
+            <div class="discord-cta reveal">
+                <h2><i class="fab fa-discord"></i> Join Our Community</h2>
+                <p>Connect with players and staff, stay updated on announcements, and find your next patrol.</p>
+                <a href="https://discord.gg/wUBsx36BC7" target="_blank" class="discord-btn"><i class="fab fa-discord"></i> Join Discord Server</a>
+            </div>
         </section>
 
         <!-- Footer -->
         <footer class="footer">
-            <p> West Coast State RP. All rights reserved.</p>
-            <p>Designed for the West Coast State RP community.</p>
+            <img src="westcoaststaterp.png" alt="WCS RP" class="foot-logo">
+            <div>© <span id="year"></span> West Coast State RP. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#command">Command</a>
+                <a href="#resources">Resources</a>
+                <a href="#security">Security</a>
+                <a href="#contact">Contact</a>
+                <a href="https://discord.gg/wUBsx36BC7" target="_blank">Discord</a>
+            </div>
+            <div>Designed for the West Coast State RP community.</div>
         </footer>
 
     </div>
 
+    <button class="to-top" id="toTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
     <script>
-        // Generate floating particles
-        const particlesContainer = document.getElementById('particles');
-        const colors = ['rgba(255,255,255,0.3)', 'rgba(255,235,167,0.3)', 'rgba(129,236,236,0.3)', 'rgba(255,118,117,0.2)'];
-        
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particle.style.width = particle.style.height = (Math.random() * 8 + 4) + 'px';
-            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-            particlesContainer.appendChild(particle);
+        // ---------- Floating particles (subtle) ----------
+        (function () {
+            const container = document.getElementById('particles');
+            const colors = [
+                'rgba(255, 193, 69, 0.35)',
+                'rgba(255, 140, 66, 0.30)',
+                'rgba(45, 212, 191, 0.28)',
+                'rgba(255, 89, 100, 0.22)'
+            ];
+            for (let i = 0; i < 24; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 6 + 3;
+                p.style.left = Math.random() * 100 + '%';
+                p.style.width = p.style.height = size + 'px';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                p.style.animationDelay = (Math.random() * 12) + 's';
+                container.appendChild(p);
+            }
+        })();
+
+        // ---------- Navbar scroll state ----------
+        const navbar = document.getElementById('navbar');
+        const toTop = document.getElementById('toTop');
+        function onScroll() {
+            navbar.classList.toggle('scrolled', window.scrollY > 30);
+            toTop.classList.toggle('show', window.scrollY > 600);
         }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
+        toTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Logo fallback - replace with actual hosted image
-        document.querySelector('.logo-container img').addEventListener('error', function() {
-            this.src = 'logo.png;
+        // ---------- Mobile menu ----------
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        navToggle.addEventListener('click', function () {
+            const open = navMenu.classList.toggle('open');
+            navToggle.innerHTML = open ? '<i class="fas fa-xmark"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        navMenu.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () {
+                navMenu.classList.remove('open');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // ---------- Scroll reveal ----------
+        const revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(function (el) { revealObserver.observe(el); });
+
+        // ---------- Active nav link highlighting ----------
+        const navAnchors = document.querySelectorAll('.nav-links a');
+        const sectionObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navAnchors.forEach(function (a) {
+                        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+        ['home', 'command', 'resources', 'security', 'contact'].forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) sectionObserver.observe(el);
+        });
+
+        // ---------- Footer year ----------
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ---------- Logo fallback (fixes broken path if image is missing) ----------
+        document.querySelectorAll('img').forEach(function (img) {
+            img.addEventListener('error', function () {
+                if (!this.dataset.fallback) {
+                    this.dataset.fallback = '1';
+                    this.style.display = 'none';
+                }
+            });
         });
     </script>
 
